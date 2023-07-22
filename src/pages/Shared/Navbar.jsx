@@ -18,6 +18,7 @@ import logoImg from "../../assets/images/logo/education.png";
 import { Drawer, Badge, Space } from "antd";
 
 import Search from "../../components/Search/Search";
+import CartBadge from "../../components/cart/CartBadge";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -65,9 +66,6 @@ const Navbar = () => {
             <h4 className="uppercase text-2xl text-neutral-600">unix</h4>
           </Link>
           <ul className="flex items-center md:space-x-3 lg:space-x-8 xl:space-x-12">
-            <li>
-              <Search></Search>
-            </li>
             <li className="hover:font-semibold border-sky-500 hover:border-b-[1px] transition-[2s]">
               <Link to={`/`}>Home</Link>
             </li>
@@ -79,6 +77,12 @@ const Navbar = () => {
             </li>
             <li className="hover:font-semibold border-sky-500 hover:border-b-[1px] transition-[2s]">
               <Link to={`/mycollage`}>My Collage</Link>
+            </li>
+            <li>
+              <Search></Search>
+            </li>
+            <li>
+              <CartBadge></CartBadge>
             </li>
           </ul>
         </div>
@@ -102,11 +106,7 @@ const Navbar = () => {
               onClick={showDrawer}
               className="text-2xl cursor-pointer"
             ></AiOutlineMenu>
-            <Space size="large">
-              <Badge count={1}>
-                <AiOutlineShoppingCart className="text-3xl"></AiOutlineShoppingCart>
-              </Badge>
-            </Space>
+            <CartBadge></CartBadge>
           </div>
         </div>
         <Drawer
