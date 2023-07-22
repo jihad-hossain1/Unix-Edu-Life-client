@@ -20,7 +20,7 @@ const banarImage = [
 ];
 const Slider = () => {
   return (
-    <>
+    <div className="pt-4">
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
@@ -34,11 +34,41 @@ const Slider = () => {
       >
         {banarImage.map((item, index) => (
           <SwiperSlide key={index}>
-            <img src={item?.image} className="md:w-full max-h-max" alt="" />
+            <div className="relative">
+              <img src={item?.image} className="w-full max-h-screen " alt="" />
+              <div className="absolute ">
+                <h2 className="text-white">here me</h2>
+              </div>
+            </div>
+            {/* <div
+              key={index}
+              style={{
+                backgroundImage: `url(${item?.image})`,
+                width: "100%",
+                height: "600px",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                marginBottom: "10px",
+              }}
+              className="bg-cover  bg-center  bg-no-repeat "
+            ></div> */}
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+      {/* {banarImage.map((item, index) => (
+        <div
+          key={index}
+          style={{
+            backgroundImage: `url(${item?.image})`,
+            width: "200px",
+            height: "200px",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            marginBottom: "10px",
+          }}
+        ></div>
+      ))} */}
+    </div>
   );
 };
 
