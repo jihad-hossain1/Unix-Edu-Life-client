@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { TfiFacebook } from "react-icons/tfi";
 import useAuth from "../../hooks/useAuth";
+import { saveUser } from "../../api/userApi";
 
 const Login = () => {
   const { signInWithGoogle, signIn } = useAuth();
@@ -19,6 +20,7 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         if (result) {
+          saveUser(result.user);
           toast.success(`Login Successfull`);
           navigate(from, { replace: true });
         }
@@ -40,6 +42,7 @@ const Login = () => {
     signIn(data.email, data.password)
       .then((result) => {
         if (result) {
+          saveUser(result.user);
           navigate(from, { replace: true });
           reset();
           toast.success("Login Success");

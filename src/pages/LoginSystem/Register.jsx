@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { TfiFacebook } from "react-icons/tfi";
 import useAuth from "../../hooks/useAuth";
+import { saveUser } from "../../api/userApi";
 const img_hosting_token = import.meta.env.VITE_BB_KEY;
 
 const Register = () => {
@@ -21,6 +22,7 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         if (result) {
+          saveUser(result.user);
           toast.success(`Login Successfull`);
           navigate(from, { replace: true });
         }
@@ -53,6 +55,7 @@ const Register = () => {
           createUser(data.email, data.password)
             .then((result) => {
               updateUserProfile(data.name, photoUrl).then(() => {
+                saveUser(result.user);
                 navigate(from, { replace: true });
                 reset();
                 toast.success("Login Success");
