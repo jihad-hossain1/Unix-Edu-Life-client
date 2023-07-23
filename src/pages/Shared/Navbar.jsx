@@ -1,33 +1,73 @@
 import React, { useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
 import {
   AiFillFacebook,
   AiFillGithub,
   AiFillInstagram,
   AiFillTwitterCircle,
-  AiFillCaretDown,
-  AiOutlineSearch,
   AiOutlineMenu,
-  AiTwotoneHome,
   AiOutlineClose,
-  AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { HiUser, HiOutlineHeart, HiCog6Tooth } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import Container from "../../components/container/Container";
 import logoImg from "../../assets/images/logo/education.png";
-import { Drawer, Badge, Space } from "antd";
+import { Drawer, Space, Dropdown } from "antd";
 
 import Search from "../../components/Search/Search";
 import CartBadge from "../../components/cart/CartBadge";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user, logOut } = useAuth();
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+  const items = [
+    {
+      key: "1",
+      label: (
+        <Link to={``} className="flex gap-2 items-center">
+          <HiOutlineHeart className="text-2xl text-sky-600"></HiOutlineHeart>{" "}
+          <span className="">Favorite</span>{" "}
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Link to={``} className="flex gap-2 items-center">
+          <HiUser className="text-2xl text-sky-600"></HiUser>{" "}
+          <span className="">Profile</span>{" "}
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <Link to={`/dashboard`} className="flex gap-2 items-center">
+          <HiCog6Tooth className="text-2xl text-sky-600"></HiCog6Tooth>{" "}
+          <span className="">Dashboard</span>{" "}
+        </Link>
+      ),
+    },
+
+    {
+      key: "4",
+      label: (
+        <button
+          onClick={logOut}
+          className="border border-sky-500 px-2  rounded shadow font-semibold"
+        >
+          LogOut
+        </button>
+      ),
+    },
+  ];
   return (
     <>
       <Container>
@@ -43,16 +83,51 @@ const Navbar = () => {
               <AiFillTwitterCircle className="hover:text-blue-500"></AiFillTwitterCircle>
             </li>
             <li>
-              <AiFillInstagram className="hover:text-pink-500"></AiFillInstagram>
+              <AiFillInstagram className="hover:text-sky-500"></AiFillInstagram>
             </li>
           </ul>
           <ul className="flex items-center space-x-5">
-            <li>
-              <Link to={`login`}>Login</Link>
-            </li>
+            {user ? (
+              <>
+                <div
+                  onClick={(e) => e.preventDefault()}
+                  className="flex gap-2"
+                  title={user?.displayName}
+                >
+                  <Dropdown
+                    menu={{
+                      items,
+                    }}
+                    placement="bottom"
+                  >
+                    <Space>
+                      <div className="avatar cursor-pointer">
+                        <div className="w-8 rounded-full">
+                          <img
+                            src={
+                              user?.photoURL || (
+                                <HiUser className="text-4xl text-gray-600"></HiUser>
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    </Space>
+                  </Dropdown>
+                </div>
+              </>
+            ) : (
+              <>
+                <li className="rounded  inline-block px-4 py-2 cursor-pointer ">
+                  <Link to="/login">LogIn</Link>
+                </li>
+              </>
+            )}
             <div className="divider-horizontal text-neutral-400">|</div>
             <li>
-              <Link to={`register`}>Register</Link>
+              <Link to={`register`}>
+                <button disabled={user}>Register</button>
+              </Link>
             </li>
           </ul>
         </div>
