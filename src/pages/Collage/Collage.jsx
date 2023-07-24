@@ -1,42 +1,20 @@
-import Swal from "sweetalert2";
+import React from "react";
+import Container from "../../components/Container/Container";
 import useCollage from "../../hooks/useCollage";
-import Container from "../Container/Container";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
-const CollageCardHome = () => {
-  const { user } = useAuth();
+const Collage = () => {
   const [collages] = useCollage();
-  const navigate = useNavigate();
-  const location = useLocation();
   console.log(collages);
-  const handleLogin = (collage) => {
-    if (user && user?.email) {
-      navigate(`/collageDetail/${collage?._id}`);
-    } else {
-      Swal.fire({
-        title: "please LogIn",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Go to, LogIn",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login", { state: { from: location } });
-          // Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        }
-      });
-    }
-  };
   return (
     <Container>
-      <div className="my-10 pt-10">
-        <h4 className="font-bold text-3xl md:text-5xl text-center text-neutral-700">
-          Top Ranked Collage of the Year
+      <div className="py-6">
+        <h4 className="text-3xl text-center text-gray-700 md:text-5xl font-bold mb-12">
+          Total <span className="font-extralight">{collages?.length}</span>{" "}
+          Collages
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-10">
-          {collages.slice(0, 3).map((collage) => (
+          {collages.map((collage) => (
             <div
               key={collage?._id}
               className="shadow-sm hover:shadow border-b border-neutral-200 flex flex-col relative"
@@ -87,4 +65,4 @@ const CollageCardHome = () => {
   );
 };
 
-export default CollageCardHome;
+export default Collage;

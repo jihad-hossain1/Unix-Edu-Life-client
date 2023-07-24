@@ -7,15 +7,43 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import UserHome from "../pages/Dashboard/UserHome";
 import UserCollection from "../pages/Dashboard/UserCollection";
 import AddItem from "../pages/Dashboard/addItem/AddItem";
+import CollageDetail from "../components/collageCard/CollageDetail";
+import { getCollage } from "../api/collage";
+import MyCollage from "../pages/MyCollage/MyCollage";
+import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../components/Error/ErrorPage";
+import Collage from "../pages/Collage/Collage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "collageDetail/:id",
+        element: (
+          <PrivateRoute>
+            <CollageDetail></CollageDetail>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => getCollage(params.id),
+      },
+      {
+        path: "myCollage",
+        element: (
+          <PrivateRoute>
+            <MyCollage></MyCollage>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "colleges",
+        element: <Collage></Collage>,
       },
     ],
   },

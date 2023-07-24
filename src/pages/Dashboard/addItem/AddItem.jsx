@@ -2,20 +2,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-import Creatable from "react-select/creatable";
 
 const img_hosting_token = import.meta.env.VITE_BB_KEY;
 
 const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 const AddItem = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  //   const options = [
-  //     { value: "chocolate", label: "Chocolate" },
-  //     { value: "strawberry", label: "Strawberry" },
-  //     { value: "vanilla", label: "Vanilla" },
-  //   ];
+  const [selectedOption2, setSelectedOption2] = useState(null);
 
   const {
     register,
@@ -67,6 +61,7 @@ const AddItem = () => {
             research,
             researchDate,
             sport: selectedOption,
+            adProcess: selectedOption2,
           };
           console.log(newItem);
           axios
@@ -206,6 +201,24 @@ const AddItem = () => {
               isMulti
               defaultValue={selectedOption}
               onChange={setSelectedOption}
+              // options={options}
+            />
+          </div>
+          {/* Admission process */}
+          <div>
+            {/* <Select
+            isMulti
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
+          /> */}
+            <label htmlFor="" className="font-semibold">
+              Admission Process
+            </label>
+            <CreatableSelect
+              isMulti
+              defaultValue={selectedOption2}
+              onChange={setSelectedOption2}
               // options={options}
             />
           </div>
